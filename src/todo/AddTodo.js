@@ -8,8 +8,12 @@ function useInputValue(defaultValue = ''){
     
     
     return {
-        value,
-        onChange: event => setValue(event.target.value)
+        bind: {
+            value,
+            onChange: event => setValue(event.target.value)
+        },
+        clear: () => setValue(''),
+        value: () => value
     }
 }
 
@@ -21,8 +25,9 @@ function AddTodo({onCreate}) {
     function submitHandler(event){
         event.preventDefault();
         
-        if (input.value.trim()){
-            onCreate(input.value);
+        if (input.value().trim()){
+            onCreate(input.value());
+            input.clear()
             //setValue('');
         }
     }
@@ -32,7 +37,7 @@ function AddTodo({onCreate}) {
         
         <form style={{marginBottom: '1rem'}} onSumbit={submitHandler} >
         
-            <input {...input} />    
+            <input {...input.bind} />    
             <button type="sumbit" onClick={submitHandler}> Add Todo </button>
         
         </form>
