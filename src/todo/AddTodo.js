@@ -3,15 +3,27 @@ import PropTypes from 'prop-types';
 
 
 
+function useInputValue(defaultValue = ''){
+     const [value, setValue] = useState(defaultValue);
+    
+    
+    return {
+        value,
+        onChange: event => setValue(event.target.value)
+    }
+}
+
+
 function AddTodo({onCreate}) {
-    const [value, setValue] = useState('');
+   const input = useInputValue('');
     
     
     function submitHandler(event){
         event.preventDefault();
         
-        if (value.trim()){
-            onCreate(value);
+        if (input.value.trim()){
+            onCreate(input.value);
+            //setValue('');
         }
     }
     
@@ -20,7 +32,7 @@ function AddTodo({onCreate}) {
         
         <form style={{marginBottom: '1rem'}} onSumbit={submitHandler} >
         
-            <input value={value} onChange={event => setValue(event.target.value)} type="text" />    
+            <input {...input} />    
             <button type="sumbit" onClick={submitHandler}> Add Todo </button>
         
         </form>
