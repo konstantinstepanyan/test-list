@@ -1,8 +1,16 @@
 import React, {useEffect} from 'react';
 import TodoList from './todo/TodoList';
-import AddTodo from './todo/AddTodo';
 import Loader from './loader';
 import Context from './context';
+
+
+const AddTodo = React.lazy(() => import('./todo/AddTodo'));
+
+//
+//const AddTodo = React.lazy(() => new Promise(resolve => {
+//    setTimeout(()=>{resolve(import('./todo/AddTodo'))}, 3000);
+//}));
+
 
 function App() {
     
@@ -57,7 +65,12 @@ function App() {
 
           <h1>React tutorial</h1>
       
-            <AddTodo onCreate = {addTodo} />
+            <React.Suspense fallback={<p></p>}>
+                <AddTodo onCreate = {addTodo} />
+            </React.Suspense>
+      
+      
+            
       
             {loading && <Loader />}
       
