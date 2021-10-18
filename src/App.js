@@ -15,8 +15,7 @@ const AddTodo = React.lazy(() => import('./todo/AddTodo'));
 function App() {
     
     const [todos, setTodos] = React.useState([]);
-    const [loading, setLoading] = React.useState([true]);
-
+    const [loading, setLoading] = React.useState(true);
     
     
     useEffect(() => {
